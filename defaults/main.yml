@@ -1,0 +1,40 @@
+---
+
+#
+# Force update of system package cache before installation.
+#
+hm_commonenv__deb_force_update: true
+
+#
+# Debian mirror which will be used for installing the packages.
+#
+hm_commonenv__deb_mirror: ftp.cz.debian.org/debian/
+
+#
+# List of Debian packages, that MUST be present on target system.
+#
+hm_commonenv__deb_install_packages:
+  - apticron
+  - aptitude
+  - apt-transport-https
+  - bash-completion
+  - curl
+  - debian-goodies
+  - htop
+  - less
+  - logrotate
+  - lsb-release
+  - mc
+  - python
+  - python3
+  - rsync
+  - syslog-ng
+  - tmux
+  - vim
+  - wget
+
+#
+# List of Debian packages, that SHOULD NOT be present on target system.
+#
+hm_commonenv__deb_remove_packages:
+  - needrestart

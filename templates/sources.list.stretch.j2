@@ -1,0 +1,21 @@
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+#
+#                             IMPORTANT WARNING
+#
+#  This file is managed remotely by Ansible orchestration tool. Any local
+#  changes will be overwritten without any notice !!! You have been warned !!!
+#
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+
+deb http://{{ hm_commonenv__deb_mirror }} stretch main contrib non-free
+deb-src http://{{ hm_commonenv__deb_mirror }} stretch main contrib non-free
+
+deb http://security.debian.org/ stretch/updates main contrib non-free
+deb-src http://security.debian.org/ stretch/updates main contrib non-free
+
+# stretch-updates, previously known as 'volatile'
+deb http://{{ hm_commonenv__deb_mirror }} stretch-updates main
+deb-src http://{{ hm_commonenv__deb_mirror }} stretch-updates main
+
+# backports repository
+deb http://ftp.debian.org/debian/ stretch-backports main contrib non-free

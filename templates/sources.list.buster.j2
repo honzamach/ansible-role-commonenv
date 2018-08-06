@@ -1,0 +1,18 @@
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+#
+#                             IMPORTANT WARNING
+#
+#  This file is managed remotely by Ansible orchestration tool. Any local
+#  changes will be overwritten without any notice !!! You have been warned !!!
+#
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+
+deb http://{{ hm_commonenv__deb_mirror }} testing main contrib non-free
+deb-src http://{{ hm_commonenv__deb_mirror }} testing main contrib non-free
+
+deb http://security.debian.org/ testing/updates main contrib non-free
+deb-src http://security.debian.org/ testing/updates main contrib non-free
+
+# testing-updates, previously known as 'volatile'
+deb http://{{ hm_commonenv__deb_mirror }} testing-updates main
+deb-src http://{{ hm_commonenv__deb_mirror }} testing-updates main

@@ -1,0 +1,16 @@
+galaxy_info:
+  role_name: commonenv
+  author: Jan Mach
+  description: Ansible role for maintaining common environment on all target systems.
+  license: MIT
+  min_ansible_version: 2.5
+  github_branch: master
+  platforms:
+    - name: Debian
+      versions:
+        - all
+  galaxy_tags:
+    - system
+    - management
+
+dependencies: []

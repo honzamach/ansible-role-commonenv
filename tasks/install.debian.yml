@@ -1,0 +1,41 @@
+---
+
+- name: LSB distribution codename
+  debug:
+    msg: "System '{{ inventory_hostname }}' is running '{{ ansible_lsb['codename'] }}' distibution"
+  tags:
+    - debug
+
+- name: Uploading custom version of sources.list
+  template:
+    src: "{{ item }}"
+    dest: /etc/apt/sources.list
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  with_first_found:
+    - "host_files/{{ inventory_hostname }}/sources.list.j2"
+    - "group_files/servers-production/sources.list.{{ ansible_lsb['codename'] }}.j2"
+    - "group_files/servers-development/sources.list.{{ ansible_lsb['codename'] }}.j2"
+    - "group_files/servers-demo/sources.list.{{ ansible_lsb['codename'] }}.j2"
+    - "group_files/servers/sources.list.{{ ansible_lsb['codename'] }}.j2"
+    - "sources.list.{{ ansible_lsb['codename'] }}.j2"
+
+- name: Updating APT cache
+  apt: update_cache=yes
+  tags:
+    - update-cache
+  when: hm_commonenv__deb_force_update
+
+- name: Removing any unnecessary system packages
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ hm_commonenv__deb_remove_packages }}"
+
+- name: Installing essential system packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ hm_commonenv__deb_install_packages }}"
