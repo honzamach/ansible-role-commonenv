@@ -25,6 +25,7 @@ hm_commonenv__deb_install_packages:
   - logrotate
   - lsb-release
   - mc
+  - net-tools
   - python
   - python3
   - rsync
