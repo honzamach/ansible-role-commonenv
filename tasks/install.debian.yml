@@ -30,12 +30,10 @@
 
 - name: Removing any unnecessary system packages
   apt:
-    name: "{{ item }}"
+    name: "{{ hm_commonenv__deb_remove_packages }}"
     state: absent
-  with_items: "{{ hm_commonenv__deb_remove_packages }}"
 
 - name: Installing essential system packages
   apt:
-    name: "{{ item }}"
+    name: "{{ hm_commonenv__deb_install_packages }}"
     state: present
-  with_items: "{{ hm_commonenv__deb_install_packages }}"
