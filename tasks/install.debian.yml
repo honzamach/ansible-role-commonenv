@@ -16,9 +16,7 @@
     backup: yes
   with_first_found:
     - "host_files/{{ inventory_hostname }}/sources.list.j2"
-    - "group_files/servers-production/sources.list.{{ ansible_lsb['codename'] }}.j2"
-    - "group_files/servers-development/sources.list.{{ ansible_lsb['codename'] }}.j2"
-    - "group_files/servers-demo/sources.list.{{ ansible_lsb['codename'] }}.j2"
+    - "group_files/servers-{{ msms_server_type }}/sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "group_files/servers/sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "sources.list.{{ ansible_lsb['codename'] }}.j2"
 
