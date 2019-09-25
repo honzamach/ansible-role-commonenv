@@ -90,9 +90,9 @@ Internal variables
 Usage and customization
 --------------------------------------------------------------------------------
 
-This role is (attempted to be) written according to the `Ansible best practices <https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html>`__. The default implementation should fit most users,
-however you may customize it by tweaking default variables and providing custom
-templates.
+This role is (attempted to be) written according to the `Ansible best practices <https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html>`__. 
+The default implementation should fit most users, however you may customize it 
+by tweaking default variables and providing custom templates.
 
 
 Variable customizations
@@ -135,12 +135,12 @@ Example Playbook
 
 Example content of inventory file ``inventory``::
 
-    [servers-commonenv]
+    [servers_commonenv]
     localhost
 
 Example content of role playbook file ``playbook.yml``::
 
-    - hosts: servers-commonenv
+    - hosts: servers_commonenv
       remote_user: root
       roles:
         - role: honzamach.commonenv

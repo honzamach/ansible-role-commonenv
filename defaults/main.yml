@@ -11,9 +11,16 @@ hm_commonenv__deb_force_update: true
 hm_commonenv__deb_mirror: ftp.cz.debian.org/debian/
 
 #
+# List of Debian packages, that MUST NOT be present on target system.
+#
+hm_commonenv__deb_remove_packages:
+  - needrestart
+
+#
 # List of Debian packages, that MUST be present on target system.
 #
 hm_commonenv__deb_install_packages:
+  - apt
   - apticron
   - aptitude
   - apt-transport-https
@@ -33,9 +40,3 @@ hm_commonenv__deb_install_packages:
   - tmux
   - vim
   - wget
-
-#
-# List of Debian packages, that SHOULD NOT be present on target system.
-#
-hm_commonenv__deb_remove_packages:
-  - needrestart
