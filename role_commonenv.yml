@@ -11,7 +11,7 @@
 #   git clone https://github.com/honzamach/ansible-role-commonenv.git honzamach.commonenv
 #
 
-- hosts: servers-commonenv
+- hosts: servers_commonenv
   remote_user: root
   roles:
     - role: honzamach.commonenv
