@@ -18,4 +18,4 @@ deb http://{{ hm_commonenv__deb_mirror }} stretch-updates main
 deb-src http://{{ hm_commonenv__deb_mirror }} stretch-updates main
 
 # backports repository
-deb http://ftp.debian.org/debian/ stretch-backports main contrib non-free
+deb http://{{ hm_commonenv__deb_mirror }} stretch-backports main contrib non-free

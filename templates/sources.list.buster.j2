@@ -7,12 +7,15 @@
 #
 #----------------------- <+++ansible-managed-file+++> -------------------------+
 
-deb http://{{ hm_commonenv__deb_mirror }} testing main contrib non-free
-deb-src http://{{ hm_commonenv__deb_mirror }} testing main contrib non-free
+deb http://{{ hm_commonenv__deb_mirror }} buster main contrib non-free
+deb-src http://{{ hm_commonenv__deb_mirror }} buster main contrib non-free
 
-deb http://security.debian.org/ testing/updates main contrib non-free
-deb-src http://security.debian.org/ testing/updates main contrib non-free
+deb http://security.debian.org/ buster/updates main contrib non-free
+deb-src http://security.debian.org/ buster/updates main contrib non-free
 
-# testing-updates, previously known as 'volatile'
-deb http://{{ hm_commonenv__deb_mirror }} testing-updates main
-deb-src http://{{ hm_commonenv__deb_mirror }} testing-updates main
+# buster-updates, previously known as 'volatile'
+deb http://{{ hm_commonenv__deb_mirror }} buster-updates main
+deb-src http://{{ hm_commonenv__deb_mirror }} buster-updates main
+
+# backports repository
+deb http://{{ hm_commonenv__deb_mirror }} buster-backports main contrib non-free
