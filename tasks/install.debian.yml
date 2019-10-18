@@ -16,7 +16,7 @@
     backup: yes
   with_first_found:
     - "inventory/host_files/{{ inventory_hostname }}/honzamach.commonenv/sources.list.j2"
-    - "inventory/group_files/servers-{{ msms_server_type }}/honzamach.commonenv/sources.list.{{ ansible_lsb['codename'] }}.j2"
+    - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.commonenv/sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "inventory/group_files/servers/honzamach.commonenv/sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "sources.list.{{ ansible_lsb['codename'] }}.j2"
 
