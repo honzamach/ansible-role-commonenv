@@ -89,7 +89,7 @@ if [ ! -z "$SSH_CONNECTION" ]; then
         /root/.system-banner
     fi
     if [ -x /usr/local/bin/system-status ]; then
-        /usr/local/bin/system-status --brief
+        /usr/local/bin/system-status --brief --color
     fi
     echo ""
 fi

@@ -35,3 +35,23 @@
   apt:
     name: "{{ hm_commonenv__deb_install_packages }}"
     state: present
+
+- name: Creating directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - /opt/msms/lib/
+
+- name: Installing MSMS library files
+  copy:
+    src: "{{ item }}"
+    dest: "/opt/msms/lib/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - libmsms.sh
