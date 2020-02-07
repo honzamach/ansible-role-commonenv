@@ -7,55 +7,75 @@
 #
 #----------------------- <+++ansible-managed-file+++> -------------------------+
 
-# If not running interactively, don't do anything:
+#
+# Resources: https://www.cyberciti.biz/tips/bash-aliases-mac-centos-linux-unix.html
+#
+
+## If not running interactively, don't do anything:
 [ -z "$PS1" ] && return
 
 export PS1='\h:\w\$ '
 umask 022
 
-# You may uncomment the following lines if you want `ls' to be colorized:
+## Colorize 'ls' output:
 export LS_OPTIONS='--color=auto'
 eval "`dircolors`"
 alias ls='ls $LS_OPTIONS'
 alias ll='ls $LS_OPTIONS -lah'
 alias l='ls $LS_OPTIONS -lA'
-#
-# Some more alias to avoid making mistakes:
-alias rm='rm -i'
+
+## Aliases to avoid making mistakes:
+alias rm='rm -I --preserve-root'
 alias cp='cp -i'
 alias mv='mv -i'
+alias ln='ln -i'
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+alias cd..='cd ..'
 
-alias us='apt update && apt upgrade && echo "" && echo "System successfully updated `date`"'
-alias c='clear'
-alias netstat='ss -r'
-
-## Colorize the grep command output for ease of use (good for log files)##
+## Colorize the grep command output for ease of use (good for log files):
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
-## get rid of command not found ##
-alias cd..='cd ..'
-
-## a quick way to get out of current directory ##
+## A quick ways to get out of current directory:
 alias ..='cd ../'
 alias ...='cd ../../'
+alias .2='cd ../../'
 alias ....='cd ../../../'
+alias .3='cd ../../../'
 alias .....='cd ../../../../'
+alias .4='cd ../../../../'
+alias ......='cd ../../../../../'
+alias .5='cd ../../../../../'
+
+## Make mount command output pretty and in human readable format:
+alias mount='mount |column -t'
+
+## Shortcuts to save typing:
+alias us='apt update && apt upgrade && echo "" && echo "System successfully updated `date`"'
+alias cs='apt autoremove; apt autoclean;'
+alias c='clear'
+alias h='history'
+alias j='jobs -l'
+
+## Some more usefull commands:
+alias netstat='ss -r'
+alias ports='netstat -tulanp'
+alias meminfo='free -m -l -t -h'
+alias psmemtop='ps auxf | tail -n +2 | sort -nr -k4 | head -10 | (printf "TOP 10 MEMORY EATERS:\n---------------------\n" && cat)'
+alias pscputop='ps auxf | tail -n +2 | sort -nr -k3 | head -10 | (printf "TOP 10 CPU EATERS:\n------------------\n" && cat)'
 
 #export GIT_PS1_SHOWDIRTYSTATE=1
 #export GIT_PS1_SHOWSTASHSTATE=1
 #export GIT_PS1_SHOWUNTRACKEDFILES=1
 #export GIT_PS1_SHOWUPSTREAM="auto verbose"
 
-## Make mount command output pretty and human readable format
-alias mount='mount |column -t'
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+## Check the window size after each command and, if necessary, update the values of LINES and COLUMNS:
 shopt -s checkwinsize
 
-# set a fancy prompt (non-color, unless we know we "want" color)
+## Set a fancy prompt (non-color, unless we know we "want" color):
 case "$TERM" in
 xterm-color)
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
@@ -66,11 +86,11 @@ xterm-color)
     ;;
 esac
 
-# Comment in the above and uncomment this below for a color prompt
+## Comment in the above and uncomment this below for a color prompt:
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\h\[\033[01;34m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[01;33m\]$(__git_ps1 " [%s]")\[\033[00m\]\$ '
 
-# If this is an xterm set the title to user@host:dir
+## If this is an xterm set the title to user@host:dir:
 case "$TERM" in
 xterm*|rxvt*)
     PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
@@ -81,7 +101,7 @@ esac
 
 export HISTCONTROL=ignoreboth
 
-# Display banner and print some usefull statistics to anyone that connects via SSH
+## Display banner and print some usefull statistics to anyone that connects via SSH:
 if [ ! -z "$SSH_CONNECTION" ]; then
     echo ""
     echo ""
