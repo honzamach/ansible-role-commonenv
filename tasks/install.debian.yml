@@ -19,21 +19,23 @@
     - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.commonenv/sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "inventory/group_files/servers/honzamach.commonenv/sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "sources.list.{{ ansible_lsb['codename'] }}.j2"
+  notify:
+    - Refresh APT cache
 
-- name: Updating APT cache
+- name: Forcing APT cache update
   apt: update_cache=yes
   tags:
     - update-cache
-  when: hm_commonenv__deb_force_update
+  when: hm_commonenv__pkgcache_force_update
 
 - name: Removing any unnecessary system packages
   apt:
-    name: "{{ hm_commonenv__deb_remove_packages }}"
+    name: "{{ hm_commonenv__remove_packages[ansible_os_family|lower]['apt'] }}"
     state: absent
 
 - name: Installing essential system packages
   apt:
-    name: "{{ hm_commonenv__deb_install_packages }}"
+    name: "{{ hm_commonenv__install_packages[ansible_os_family|lower]['apt'] }}"
     state: present
 
 - name: Creating directories

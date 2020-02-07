@@ -3,113 +3,36 @@
 Role **commonenv**
 ================================================================================
 
-Ansible role for maintaining common environment on all target systems.
-
 * `Ansible Galaxy page <https://galaxy.ansible.com/honzamach/commonenv>`__
 * `GitHub repository <https://github.com/honzamach/ansible-role-commonenv>`__
 * `Travis CI page <https://travis-ci.org/honzamach/ansible-role-commonenv>`__
 
-
-Description
---------------------------------------------------------------------------------
-
 Main purpose of this role is to setup the environment on all servers to the liking
 of main system administrator. It will perform following tasks:
 
-* Configuration of */etc/apt/sources.list* file.
+* Configuration of ``/etc/apt/sources.list`` file.
 * Removal of unnecessary packages, that are present after clean installation.
 * Installation of essential software, tools and utilities, that the administrator
   needs to be present on all his/her servers.
-* Configuration of */root/.bashrc* resource script.
-* Configuration of */root/.system-banner* script, that is called from */root/.bashrc*
+* Configuration of ``/root/.bashrc`` resource script.
+* Configuration of ``/root/.system-banner`` script, that is called from ``/root/.bashrc``
   script.
-* Configuration of global */etc/vim/vimrc* resource script.
+* Configuration of global ``/etc/vim/vimrc`` resource script.
 
-.. note::
+**Table of Contents:**
 
-    This role supports the :ref:`template customization <section-overview-customize-templates>` feature.
+* :ref:`section-role-commonenv-installation`
+* :ref:`section-role-commonenv-dependencies`
+* :ref:`section-role-commonenv-usage`
+* :ref:`section-role-commonenv-variables`
+* :ref:`section-role-commonenv-files`
+* :ref:`section-role-commonenv-author`
 
-
-Requirements
---------------------------------------------------------------------------------
-
-This role does not have any special requirements.
-
-
-Dependencies
---------------------------------------------------------------------------------
-
-This role is not dependent on any other role.
-
-No other roles have direct dependency on this role.
+This role is part of the `MSMS <https://github.com/honzamach/msms>`__ package.
+Some common features are documented in its :ref:`manual <section-manual>`.
 
 
-Managed files
---------------------------------------------------------------------------------
-
-* ``/etc/apt/sources.list``
-* ``/etc/vim/vimrc``
-* ``/root/.bashrc``
-* ``/root/.system-banner``
-
-
-Internal variables
---------------------------------------------------------------------------------
-
-.. envvar:: hm_commonenv__deb_force_update
-
-    Force update of system package cache before installing any packages.
-
-    * *Datatype:* ``bool``
-    * *Default:* ``true``
-
-.. envvar:: hm_commonenv__deb_mirror
-
-    Debian mirror which will be used for installing the packages.
-
-    * *Datatype:* ``str``
-    * *Default:* ``ftp.cz.debian.org/debian/``
-
-.. envvar:: hm_commonenv__deb_remove_packages
-
-    List of Debian packages, that MUST NOT be present on target system. Any package
-    on this list will be removed from target host.
-
-    * *Datatype:* ``list of strings``
-    * *Default:* (please see YAML file ``defaults/main.yml``)
-
-.. envvar:: hm_commonenv__deb_install_packages
-
-    List of Debian packages, that MUST be present on target system. Any package
-    on this list will be installed on target host.
-
-    * *Datatype:* ``list of strings``
-    * *Default:* (please see YAML file ``defaults/main.yml``)
-
-
-Usage and customization
---------------------------------------------------------------------------------
-
-This role is (attempted to be) written according to the `Ansible best practices <https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html>`__. 
-The default implementation should fit most users, however you may customize it 
-by tweaking default variables and providing custom templates.
-
-
-Variable customizations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Most of the usefull variables are defined in ``defaults/main.yml`` file, so they
-can be easily overridden almost from `anywhere <https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable>`__.
-
-
-Template customizations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This roles uses *with_first_found* mechanism for all of its templates. If you do
-not like anything about built-in template files you may provide your own custom
-templates. For now please see the role tasks for list of all checked paths for
-each of the template files.
-
+.. _section-role-commonenv-installation:
 
 Installation
 --------------------------------------------------------------------------------
@@ -130,15 +53,33 @@ Currently the advantage of using direct Git cloning is the ability to easily upd
 the role when new version comes out.
 
 
-Example Playbook
+.. _section-role-commonenv-dependencies:
+
+Dependencies
+--------------------------------------------------------------------------------
+
+This role is not dependent on any other role.
+
+Following roles have dependency on this role:
+
+* :ref:`section-role-logserver` *[SOFT]*
+* :ref:`section-role-mentat` *[SOFT]*
+* :ref:`section-role-mentat-dev` *[SOFT]*
+* :ref:`section-role-postgresql` *[SOFT]*
+* :ref:`section-role-warden-client` *[SOFT]*
+
+
+.. _section-role-commonenv-usage:
+
+Usage
 --------------------------------------------------------------------------------
 
 Example content of inventory file ``inventory``::
 
     [servers_commonenv]
-    localhost
+    your-server
 
-Example content of role playbook file ``playbook.yml``::
+Example content of role playbook file ``role_playbook.yml``::
 
     - hosts: servers_commonenv
       remote_user: root
@@ -149,16 +90,105 @@ Example content of role playbook file ``playbook.yml``::
 
 Example usage::
 
-    ansible-playbook -i inventory playbook.yml
+    # Run everything:
+    ansible-playbook --ask-vault-pass --inventory inventory role_playbook.yml
+
+    # Force update of system package cache before installing any packages:
+    ansible-playbook --ask-vault-pass --inventory inventory role_playbook.yml --extra-vars '{"hm_commonenv__pkgcache_force_update":true}'
 
 
-License
+.. _section-role-commonenv-variables:
+
+Configuration variables
 --------------------------------------------------------------------------------
 
-MIT
+
+Internal role variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. envvar:: hm_commonenv__pkgcache_force_update
+
+    Force update of system package cache before installing any packages.
+
+    * *Datatype:* ``bool``
+    * *Default:* ``false``
+
+.. envvar:: hm_commonenv__deb_mirror
+
+    Debian mirror which will be used for installing packages.
+
+    * *Datatype:* ``str``
+    * *Default:* ``ftp.cz.debian.org/debian/``
+
+.. envvar:: hm_commonenv__remove_packages
+
+    List of packages defined separately for each linux distribution and package manager,
+    that MUST NOT be present on target system. Any package on this list will be removed
+    from target host. This role currently recognizes only ``apt`` for ``debian``.
+
+    * *Datatype:* ``dict``
+    * *Default:* (please see YAML file ``defaults/main.yml``)
+    * *Example:*
+
+    .. code-block:: yaml
+
+        hm_commonenv__remove_packages:
+          debian:
+            apt:
+              - needrestart
+              - ...
+
+.. envvar:: hm_commonenv__install_packages
+
+    List of packages defined separately for each linux distribution and package manager,
+    that MUST be present on target system. Any package on this list will be installed on
+    target host. This role currently recognizes only ``apt`` for ``debian``.
+
+    * *Datatype:* ``dict``
+    * *Default:* (please see YAML file ``defaults/main.yml``)
+    * *Example:*
+
+    .. code-block:: yaml
+
+        hm_commonenv__install_packages:
+          debian:
+            apt:
+              - apt
+              - ...
 
 
-Author Information
+Built-in Ansible variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:envvar:`ansible_lsb['codename']`
+
+    Linux distribution codename. It is used to generate correct APT repository URL
+    and for :ref:`template customizations <section-overview-role-customize-templates>`.
+
+
+.. _section-role-commonenv-files:
+
+Managed files
 --------------------------------------------------------------------------------
 
-Honza Mach <honza.mach.ml@gmail.com>
+.. note::
+
+    This role supports the :ref:`template customization <section-overview-role-customize-templates>` feature.
+
+This role manages content of following files on target system:
+
+* ``/etc/apt/sources.list`` *[TEMPLATE]*
+* ``/etc/vim/vimrc`` *[TEMPLATE]*
+* ``/root/.bashrc`` *[TEMPLATE]*
+* ``/root/.system-banner`` *[TEMPLATE]*
+
+
+.. _section-role-commonenv-author:
+
+Author and license
+--------------------------------------------------------------------------------
+
+| *Copyright:* (C) since 2019 Honza Mach <honza.mach.ml@gmail.com>
+| *Author:* Honza Mach <honza.mach.ml@gmail.com>
+| Use of this role is governed by the MIT license, see LICENSE file.
+|
