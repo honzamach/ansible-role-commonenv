@@ -22,6 +22,8 @@
   notify:
     - Refresh APT cache
 
+- meta: flush_handlers
+
 - name: Forcing APT cache update
   apt: update_cache=yes
   tags:
