@@ -8,12 +8,17 @@ Role **commonenv**
 * `Travis CI page <https://travis-ci.org/honzamach/ansible-role-commonenv>`__
 
 Main purpose of this role is to setup the environment on all servers to the liking
-of main system administrator. It will perform following tasks:
+of the primary system administrator. Following tasks will be performed:
 
-* Configuration of ``/etc/apt/sources.list`` file.
+* Configuration of ``/etc/apt/sources.list`` file, to make sure you are using
+  appropriate mirror server.
 * Removal of unnecessary packages, that are present after clean installation.
+  Perhaps you want your installation to be even more minimalistic, or you want
+  to get rid of some default packages in favor some alternative, for example
+  use different logging daemon or MTA.
 * Installation of essential software, tools and utilities, that the administrator
-  needs to be present on all his/her servers.
+  needs to be present on all his/her servers. If you have your favorite suite
+  of tools, you can enforce them to be available on each of your servers.
 * Configuration of ``/root/.bashrc`` resource script.
 * Configuration of ``/root/.system-banner`` script, that is called from ``/root/.bashrc``
   script.
@@ -75,6 +80,9 @@ Usage
 --------------------------------------------------------------------------------
 
 Example content of inventory file ``inventory``::
+
+    [servers]
+    your-server
 
     [servers_commonenv]
     your-server
@@ -173,14 +181,48 @@ Managed files
 
 .. note::
 
-    This role supports the :ref:`template customization <section-overview-role-customize-templates>` feature.
+    This role supports the :ref:`template customization <section-overview-role-customize-templates>`
+    feature.
 
 This role manages content of following files on target system:
 
 * ``/etc/apt/sources.list`` *[TEMPLATE]*
+
+  Customizable with following templates::
+
+    ``inventory/host_files/{{ inventory_hostname }}/honzamach.commonenv/sources.list.j2``
+    ``inventory/group_files/servers_{{ msms_server_type }}/honzamach.commonenv/sources.list.{{ ansible_lsb['codename'] }}.j2``
+    ``inventory/group_files/servers/honzamach.commonenv/sources.list.{{ ansible_lsb['codename'] }}.j2``
+
 * ``/etc/vim/vimrc`` *[TEMPLATE]*
+
+  Customizable with following templates::
+
+    ``inventory/host_files/{{ inventory_hostname }}/honzamach.commonenv/vimrc.j2``
+    ``inventory/group_files/servers_{{ msms_server_type }}/honzamach.commonenv/vimrc.{{ ansible_lsb['codename'] }}.j2``
+    ``inventory/group_files/servers_{{ msms_server_type }}/honzamach.commonenv/vimrc.j2``
+    ``inventory/group_files/servers/honzamach.commonenv/vimrc.{{ ansible_lsb['codename'] }}.j2``
+    ``inventory/group_files/servers/honzamach.commonenv/vimrc.j2``
+
 * ``/root/.bashrc`` *[TEMPLATE]*
+
+  Customizable with following templates::
+
+    ``inventory/host_files/{{ inventory_hostname }}/honzamach.commonenv/bashrc.j2``
+    ``inventory/group_files/servers_{{ msms_server_type }}/honzamach.commonenv/bashrc.{{ ansible_lsb['codename'] }}.j2``
+    ``inventory/group_files/servers_{{ msms_server_type }}/honzamach.commonenv/bashrc.j2``
+    ``inventory/group_files/servers/honzamach.commonenv/bashrc.{{ ansible_lsb['codename'] }}.j2``
+    ``inventory/group_files/servers/honzamach.commonenv/bashrc.j2``
+
 * ``/root/.system-banner`` *[TEMPLATE]*
+
+  Customizable with following templates::
+
+    ``inventory/host_files/{{ inventory_hostname }}/honzamach.commonenv/system-banner.j2``
+    ``inventory/group_files/servers_{{ msms_server_type }}/honzamach.commonenv/system-banner.{{ ansible_lsb['codename'] }}.j2``
+    ``inventory/group_files/servers_{{ msms_server_type }}/honzamach.commonenv/system-banner.j2``
+    ``inventory/group_files/servers/honzamach.commonenv/system-banner.{{ ansible_lsb['codename'] }}.j2``
+    ``inventory/group_files/servers/honzamach.commonenv/system-banner.j2``
 
 
 .. _section-role-commonenv-author:
