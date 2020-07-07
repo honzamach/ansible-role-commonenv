@@ -1,4 +1,4 @@
-.. _section-cookbook-roles-cleanup:
+.. _section-cookbook-roles-commonenv:
 
 Host common environment setup
 ================================================================================
