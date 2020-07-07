@@ -25,6 +25,8 @@ Then execute the role::
 
     apbf role_commonenv.yml
 
+Please refer to role :ref:`commonenv <section-role-commonenv>` for more details.
+
 
 .. _section-cookbook-roles-commonenv-custbashrc:
 
@@ -45,3 +47,5 @@ to override the default:
 Then execute the role::
 
     apbf role_commonenv.yml
+
+Please refer to role :ref:`commonenv <section-role-commonenv>` for more details.
