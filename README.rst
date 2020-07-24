@@ -121,6 +121,13 @@ Internal role variables
     * *Datatype:* ``bool``
     * *Default:* ``false``
 
+.. envvar:: hm_commonenv__manage_sources_list
+
+    Let the role manage contents of ``/etc/apt/sources.list`` file.
+
+    * *Datatype:* ``bool``
+    * *Default:* ``true``
+
 .. envvar:: hm_commonenv__deb_mirror
 
     Debian mirror which will be used for installing packages.

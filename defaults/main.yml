@@ -2,6 +2,8 @@
 
 hm_commonenv__pkgcache_force_update: false
 
+hm_commonenv__manage_sources_list: true
+
 hm_commonenv__deb_mirror: ftp.cz.debian.org/debian/
 
 hm_commonenv__remove_packages:

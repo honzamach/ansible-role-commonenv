@@ -20,6 +20,7 @@
     - "inventory/group_files/servers/honzamach.commonenv/sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "sources.list.j2"
+  when: hm_commonenv__manage_sources_list
   notify:
     - Refresh APT cache
 
