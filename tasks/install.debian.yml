@@ -19,6 +19,7 @@
     - "inventory/group_files/servers_{{ msms_server_type }}/honzamach.commonenv/sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "inventory/group_files/servers/honzamach.commonenv/sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "sources.list.{{ ansible_lsb['codename'] }}.j2"
+    - "sources.list.j2"
   notify:
     - Refresh APT cache
 

@@ -1,0 +1,21 @@
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+#
+#                             IMPORTANT WARNING
+#
+#  This file is managed remotely by Ansible orchestration tool. Any local
+#  changes will be overwritten without any notice !!! You have been warned !!!
+#
+#----------------------- <+++ansible-managed-file+++> -------------------------+
+
+deb http://{{ hm_commonenv__deb_mirror }} {{ ansible_lsb['codename'] | lower }} main contrib non-free
+deb-src http://{{ hm_commonenv__deb_mirror }} {{ ansible_lsb['codename'] | lower }} main contrib non-free
+
+deb http://security.debian.org/ {{ ansible_lsb['codename'] | lower }}/updates main contrib non-free
+deb-src http://security.debian.org/ {{ ansible_lsb['codename'] | lower }}/updates main contrib non-free
+
+# {{ ansible_lsb['codename'] | lower }}-updates, previously known as 'volatile'
+deb http://{{ hm_commonenv__deb_mirror }} {{ ansible_lsb['codename'] | lower }}-updates main
+deb-src http://{{ hm_commonenv__deb_mirror }} {{ ansible_lsb['codename'] | lower }}-updates main
+
+# backports repository
+deb http://{{ hm_commonenv__deb_mirror }} {{ ansible_lsb['codename'] | lower }}-backports main contrib non-free
