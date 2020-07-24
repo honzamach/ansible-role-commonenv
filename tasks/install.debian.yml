@@ -21,8 +21,7 @@
     - "sources.list.{{ ansible_lsb['codename'] }}.j2"
     - "sources.list.j2"
   when: hm_commonenv__manage_sources_list
-  notify:
-    - Refresh APT cache
+  register: hm_commonenv__sources_list_updated
 
 - meta: flush_handlers
 
@@ -30,7 +29,7 @@
   apt: update_cache=yes
   tags:
     - update-cache
-  when: hm_commonenv__pkgcache_force_update
+  when: hm_commonenv__pkgcache_force_update or hm_commonenv__sources_list_updated.changed | default(false)
 
 - name: Removing any unnecessary system packages
   apt:
